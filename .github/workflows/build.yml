@@ -1,0 +1,36 @@
+name: Build and Release Electron App
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build_on_win:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 19  # Adjust Node.js version as per your project
+        
+    - name: Install dependencies
+      run: npm install
+      
+    - name: Build Electron app for Windows
+      run: npm run electron:package:win
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Publish Artifact
+      id: create_release
+      uses: actions/upload-artifact@v2
+      with:
+        name: Electron-app
+        path: dist/*.exe
