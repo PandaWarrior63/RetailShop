@@ -10,7 +10,7 @@ const ProfileNameCard = (props: Props) => {
   const { itemString, fetchItemImage } = useItemService();
   useEffect(() => {
     if (user) {
-      fetchItemImage(user.employerId.toString());
+      //fetchItemImage(user.employerId.toString());
     }
   }, []);
 

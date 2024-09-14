@@ -61,6 +61,7 @@ function App() {
               path='/cashier-dashboard'
               element={<CashierDashBoardPage />}
             />
+            
             {/* Add more routes specific to CASHIER if needed */}
           </>
         )}

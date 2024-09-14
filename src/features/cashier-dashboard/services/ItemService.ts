@@ -5,6 +5,7 @@ import { useUserContext } from '../../../context/UserContext';
 import { toast } from 'react-toastify';
 import { IMedicine } from '../../../interfaces/IMedicine';
 import { usePaymentContext } from '../layout/MainCashierDashboard';
+import { IItemInterface } from '../../../interfaces/IItemInterface';
 
 const useItemService = () => {
   const http = useAxiosInstance();
@@ -40,12 +41,21 @@ const useItemService = () => {
       }
       setLoading(true);
       const res = await http.get(
-        `/item/branched/get-item/${user.user?.branchId}`
+        `/retailshop.api.v1.data.data.items/${user.user?.branchId}`
         // `/item/branched/get-item/1`
       );
-      const data = res.data.data;
+      console.log(res);
+      const data = res.data.message.items;
+      const prices = res.data.message.prices;
       if (data.length === 0) return [];
-      const mappedItems = data.map((item: any) => mapIItemsToIMedicine(item));
+      const mappedItems = data.map((item: any) => mapIItemsToIMedicine(item)).map((item: IMedicine) =>{
+        const defaultPrice = prices.find((priceItem: any) => priceItem.item_code === item.name);
+        console.log("default rpice=",defaultPrice);
+        let price = defaultPrice?.price_list_rate || 0
+        return {
+            ...item,price:price
+        }
+      });
       setItems(mappedItems);
       console.log(res);
       setMedicine(mappedItems);

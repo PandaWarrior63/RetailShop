@@ -3,25 +3,33 @@ import { useEffect } from 'react';
 import { getCookie } from '../utils/getCookie';
 import { useUserContext } from '../../../context/UserContext';
 // import { useUserContext } from '../../../context/UserContext';
+import { storageService } from '../../../services/StorageService';
 
-const useAxiosInstance = () => {
+const useAxiosInstance =   () =>  {
   const { cookie } = useUserContext();
+  var token = cookie?cookie:storageService.getTokenDirectly(storageService.token);
 
-  const instance = axios.create({
+  const instance =token? axios.create({
     // baseURL: 'http://localhost:8079/lifepill/v1',
-    baseURL: 'http://18.188.108.84:8079/lifepill/v1',
+    //baseURL: 'http://18.188.108.84:8079/lifepill/v1',
+    baseURL: 'http://134.209.210.1/api/method/',
     headers: {
       'Content-type': 'application/json',
-      Authorization: `Bearer ${cookie}`,
+       Authorization: `Bearer ${token}`,
+    },
+  }):axios.create({
+    baseURL: 'http://134.209.210.1/api/method/',
+    headers: {
+      'Content-type': 'application/json',
     },
   });
 
-  // console.log(getCookie('Authorization'));
+
   console.log(cookie);
-  // console.log(user);
   useEffect(() => {
     // Update instance headers when cookie changes
-    instance.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
+    if (cookie)
+      instance.defaults.headers.common['Authorization'] = `Bearer ${cookie}`;
     console.log(`Bearer ${cookie}`);
   }, [cookie, instance]);
 

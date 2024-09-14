@@ -91,7 +91,7 @@ const MedicineGrid = () => {
 
   return (
     <>
-      <div className='overflow-y-scroll flex min-h-[300px] max-h-[400px] flex-col'>
+      <div className='overflow-y-scroll flex min-h-[400px] max-h-[500px]  flex-col'>
         <table className='text-sm text-left text-gray-500 dark:text-gray-400 max-h-screen overflow-scroll'>
           <thead className='text-xs uppercase bg-slate-300 sticky top-0'>
             <tr>

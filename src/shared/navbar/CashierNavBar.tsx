@@ -37,7 +37,7 @@ const CashierNavBar = () => {
       <DateAndTimeNavBar />
 
       {/* Search */}
-      <MedicineSearchBar />
+      {/* <MedicineSearchBar /> */}
 
       <Divider />
 
@@ -59,7 +59,7 @@ const CashierNavBar = () => {
       /> */}
       <ButtonWithIconAndText
         icon={<PiDeviceMobileSpeakerThin size={20} />}
-        text='Online Orders'
+        text='Invoices'
         onClick={handleShowOnlineOrders}
       />
 

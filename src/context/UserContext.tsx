@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import { IEmployeeInterface } from '../interfaces/IEmployeeInterface';
+import { storageService } from '../services/StorageService';
 
 interface UserContextType {
   user: IEmployeeInterface | null;
@@ -15,7 +16,8 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [user, setUser] = useState<IEmployeeInterface | null>(() => {
     // Initialize user from local storage if available
-    const storedUser = localStorage.getItem('user');
+    //const storedUser = localStorage.getItem('user');
+    const storedUser = storageService.getTokenDirectly(storageService.user)
     return storedUser ? JSON.parse(storedUser) : null;
   });
 

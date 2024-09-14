@@ -3,6 +3,7 @@ import { useUserContext } from '../../../context/UserContext';
 import useAxiosInstance from '../../login/services/useAxiosInstance';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
+import { storageService } from '../../../services/StorageService';
 
 const useAuthService = () => {
   const http = useAxiosInstance();
@@ -24,7 +25,8 @@ const useAuthService = () => {
           toast.success('Logged out successfully');
           navigate('/');
           // Remove user data from local storage
-          localStorage.removeItem('user');
+          //localStorage.removeItem('user');
+          await storageService.deleteToken(storageService.user)
         }
       } catch (error) {
         console.log(error);

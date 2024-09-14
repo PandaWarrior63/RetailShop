@@ -1,6 +1,7 @@
 export interface IItemInterface {
+  name: string;
   itemId: string;
-  itemName: string;
+  item_name: string;
   sellingPrice: number;
   itemBarCode: string;
   supplyDate: Date; // You can use Date type if you prefer

@@ -15,6 +15,7 @@ import NutritionTable from '../components/nutrition-table/NutritionTable';
 import FirstAidTable from '../components/first-aid-table/FirstAidTable';
 import MedicalDeviceTable from '../components/medical-device-table/MedicalDeviceTable';
 import { IMedicine } from '../../../interfaces/IMedicine';
+import SelectPosModal from '../components/SelectPosModal';
 
 export enum ComponentState {
   OrderDetails,
@@ -53,7 +54,7 @@ const MainCashierDashboard = () => {
   const [medicine, setMedicine] = useState<IMedicine[]>([]);
 
   const [filteredMedicine, setFilteredMedicine] = useState<IMedicine[]>([]);
-
+  const [showPosModal, setShowPosModal] = useState(true);
   const contextValue: PaymentContextType = {
     currentComponent,
     setCurrentComponent,
@@ -84,10 +85,7 @@ const MainCashierDashboard = () => {
 
   return (
     <div className='flex flex-col h-screen'>
-      <div>
-        <CashierNavBar />
-      </div>
-
+      <CashierNavBar />
       <div className='flex flex-row min-h-[90%]'>
         <CashierSideBar setActiveTable={setActiveTable} />
         <Divider />
@@ -100,6 +98,15 @@ const MainCashierDashboard = () => {
           {activeTable === 'medical-devices' && <MedicalDeviceTable />}
           {renderComponent()}
         </PaymentContext.Provider>
+      </div>
+      <div>
+        {showPosModal?
+        <SelectPosModal onClose={() => {
+            console.log("Close Select Pos")
+            setShowPosModal(false);
+            // fetchCompanies();
+          }}/>:null
+        }
       </div>
     </div>
   );

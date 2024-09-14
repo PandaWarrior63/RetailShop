@@ -7,7 +7,7 @@ export const mapIItemsToIOrderedMedicine = (
 ): OrderedMedicine => {
   return {
     id: item.itemId,
-    name: item.itemName,
+    name: item.item_name,
     unitPrice: item.sellingPrice,
     amount: 0,
     availableQuantity: item.itemQuantity,

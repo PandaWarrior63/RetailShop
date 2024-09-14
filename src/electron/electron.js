@@ -16,7 +16,7 @@ function createWindow() {
     },
   });
 
-  mainWindow.setFullScreen(true);
+  mainWindow.setFullScreen(false);
 
   // In production, set the initial browser path to the local bundle generated
   // by the Create React App build process.
@@ -32,7 +32,7 @@ function createWindow() {
 
   // Automatically open Chrome's DevTools in development mode.
   if (!app.isPackaged) {
-    mainWindow.webContents.openDevTools({ mode: 'detach' });
+    //mainWindow.webContents.openDevTools({ mode: 'detach' });
   }
 }
 

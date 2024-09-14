@@ -10,8 +10,8 @@ import EulaComponent from './EulaComponent';
 import { Loader } from 'lucide-react';
 
 const LogInCard = () => {
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [username, setUsername] = useState<string>('shah@lectuscorp.com');
+  const [password, setPassword] = useState<string>('lectuscorp');
   const { setUser } = useUserContext();
   const [showEula, setShowEula] = useState(false);
   const handleShowEula = () => {
@@ -30,6 +30,7 @@ const LogInCard = () => {
         navigate('/manager-dashboard');
       } else {
         navigate('/cashier-dashboard');
+        //navigate('/select-pos');
       }
     }
   };
@@ -65,6 +66,7 @@ const LogInCard = () => {
               name='username'
               className='block w-full pl-8 rounded-md py-1.5 px-2 ring-1 focus:ring-blue'
               onChange={(e) => setUsername(e.target.value)}
+              value='shah@lectuscorp.com'
             />
           </div>
         </div>
@@ -84,6 +86,7 @@ const LogInCard = () => {
               name='password'
               className='block w-full pl-8 rounded-md py-1.5 px-2 ring-1 focus:ring-blue'
               onChange={(e) => setPassword(e.target.value)}
+              value='lectuscorp'
             />
           </div>
         </div>
@@ -94,9 +97,13 @@ const LogInCard = () => {
       </div>
       {/* Buttons */}
       <div>
-        <button className='signup_button' onClick={handleSignIn}>
+        <button className='signup_button button items-center flex justify-center' disabled={loading} onClick={handleSignIn}>
+          
           {loading ? (
-            <Loader className='flex justify-center items-center' />
+            <>
+            <Loader className='flex  animate-spin justify-center items-center' />
+            <span className="">Signing...</span>
+            </>
           ) : (
             'Sign In'
           )}

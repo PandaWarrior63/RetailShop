@@ -51,10 +51,10 @@ function OrderCardComponent({ onClose }: Props) {
     <div className='fixed top-0 left-0 w-full h-full flex justify-center items-center bg-gray-900 bg-opacity-75 z-50 backdrop-blur-sm'>
       <div className='bg-white rounded-lg p-6 w-full border border-gray-200 h-full overflow-auto shadow-lg'>
         <h2 className='text-2xl font-semibold text-gray-800 mb-4 text-center'>
-          Online Orders
+          Invoices
         </h2>
         {loadingOnlineOrders ? (
-          <div className='flex justify-center items-center h-full'>
+          <div className='flex justify-center items-center '>
             <Loader className='w-10 h-10 animate-spin' />
           </div>
         ) : (

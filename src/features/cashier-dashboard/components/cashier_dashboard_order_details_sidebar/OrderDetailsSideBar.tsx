@@ -31,8 +31,8 @@ const OrderDetailsSideBar = (props: Props) => {
   };
 
   return (
-    <div className='w-auto flex justify-center flex-col font-poppins space-y-3 p-4 min-h-[400px]'>
-      <p className='border rounded-full w-10/12 bg-slate-300 text-grayLight text-center mx-auto p-2 '>
+    <div className='w-auto flex pt-4 flex-col font-poppins space-y-3 p-0 min-h-[400px] max-w-[450px]'>
+      <p className='font-bold w-10/12  text-sky-400 text-center mx-auto p-2 '>
         Order Details
       </p>
       <div>

@@ -1,7 +1,7 @@
 import React, { Dispatch } from 'react';
 import { PiSyringeLight } from 'react-icons/pi';
 import { PiHandHeartLight } from 'react-icons/pi';
-import { PiPillLight } from 'react-icons/pi';
+import { PiTruckFill } from 'react-icons/pi';
 import { IoIosFitness } from 'react-icons/io';
 import { PiFirstAidKit } from 'react-icons/pi';
 import { CiMedicalClipboard } from 'react-icons/ci';
@@ -19,8 +19,14 @@ const CashierSideBar = (props: Props) => {
   const { logOutCashier, logging, temporaryLogOutCashier, temporayLogout } =
     useAuthService();
   return (
-    <div className='left-0 max-w-24 p-4 font-poppins flex flex-col relative'>
+    <div className='left-0 min-w-[100px]  p-4 font-poppins flex flex-col relative'>
       <ButtonWithIconAndTextVertical
+        icon={<PiTruckFill size={25} />}
+        text='Product'
+        onClick={() => props.setActiveTable('medicine')}
+        testid='medicine'
+      />
+      {/* <ButtonWithIconAndTextVertical
         icon={<PiSyringeLight size={25} />}
         text='Medical Devices'
         onClick={() => props.setActiveTable('medical-devices')}
@@ -31,12 +37,6 @@ const CashierSideBar = (props: Props) => {
         text='Personal Care'
         onClick={() => props.setActiveTable('personal-care')}
         testid='personal-care'
-      />
-      <ButtonWithIconAndTextVertical
-        icon={<PiPillLight size={25} />}
-        text='Medicine'
-        onClick={() => props.setActiveTable('medicine')}
-        testid='medicine'
       />
       <ButtonWithIconAndTextVertical
         icon={<IoIosFitness size={25} />}
@@ -55,7 +55,7 @@ const CashierSideBar = (props: Props) => {
         text='Nutrition'
         onClick={() => props.setActiveTable('nutrition')}
         testid='nutrition'
-      />
+      /> */}
 
       <div className='absolute bottom-4 right-4'>
         <ButtonWithIconAndTextVertical
