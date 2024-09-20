@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { CiUser } from 'react-icons/ci';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import Logo from '../../../assets/logo/logo.png';
-
 import { useNavigate } from 'react-router-dom';
 import useSignIn from '../services/AuthService';
 import { useUserContext } from '../../../context/UserContext';
 import EulaComponent from './EulaComponent';
 import { Loader } from 'lucide-react';
-
+import PreLoader from '../../../shared/preloader/PreLoader';
+import useInitData from '../services/InitService';
+import { DatabaseHelpers } from '../../../utils/databaseHelper';
 const LogInCard = () => {
   const [username, setUsername] = useState<string>('shah@lectuscorp.com');
   const [password, setPassword] = useState<string>('lectuscorp');
@@ -21,17 +22,24 @@ const LogInCard = () => {
   const navigate = useNavigate();
 
   const { signIn, loading } = useSignIn();
+  const { getInitData, initDataLoading } = useInitData();
 
   const handleSignIn = async () => {
     const user = await signIn(username, password);
     if (user) {
       setUser(user);
-      if (user.role === 'OWNER') {
-        navigate('/manager-dashboard');
-      } else {
-        navigate('/cashier-dashboard');
-        //navigate('/select-pos');
-      }
+      const response = await getInitData();
+      // if (user.role === 'OWNER') {
+      //   navigate('/manager-dashboard');
+      // } else {
+      //   navigate('/cashier-dashboard');
+      //   //navigate('/select-pos');
+      // }
+      //await window.ipcRenderer.invoke("create-test");
+      if (response)
+        await DatabaseHelpers.ipcRenderer().invoke("save-init-data",response);
+      
+      //window.api.createTest();
     }
   };
 
@@ -66,8 +74,7 @@ const LogInCard = () => {
               name='username'
               className='block w-full pl-8 rounded-md py-1.5 px-2 ring-1 focus:ring-blue'
               onChange={(e) => setUsername(e.target.value)}
-              value='shah@lectuscorp.com'
-            />
+              />
           </div>
         </div>
         <div className='w-[400px] my-4'>
@@ -86,14 +93,14 @@ const LogInCard = () => {
               name='password'
               className='block w-full pl-8 rounded-md py-1.5 px-2 ring-1 focus:ring-blue'
               onChange={(e) => setPassword(e.target.value)}
-              value='lectuscorp'
+              
             />
           </div>
         </div>
 
-        <p className='text-red cursor-pointer text-sm' onClick={handleShowEula}>
+        {/* <p className='text-red cursor-pointer text-sm' onClick={handleShowEula}>
           Forgot Password?
-        </p>
+        </p> */}
       </div>
       {/* Buttons */}
       <div>
@@ -116,8 +123,11 @@ const LogInCard = () => {
       </p>
 
       {showEula && <EulaComponent OnClose={handleShowEula} />}
+      
+      {initDataLoading? <PreLoader text="Loading"/>:''}
     </div>
+    
   );
-};
+}
 
 export default LogInCard;

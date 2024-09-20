@@ -16,6 +16,6 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules","database"],
   "include": ["src/**/*.ts", "sonarqube", "src"]
 }

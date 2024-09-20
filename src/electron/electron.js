@@ -2,6 +2,7 @@
 const { app, BrowserWindow, protocol, session, ipcMain } = require('electron');
 const path = require('path');
 const url = require('url');
+const {setupDatabase} = require('./database')
 
 // Create the native browser window.
 function createWindow() {
@@ -11,18 +12,22 @@ function createWindow() {
     // Set the path of an additional "preload" script that can be used to
     // communicate between node-land and browser-land.
     webPreferences: {
+      devTools: true,
       webSecurity: false,
-      preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: true,
+      contextIsolation: false,
+      enableRemoteModule: true,
+      // preload: path.join(__dirname, 'preload.js'),
     },
   });
 
-  mainWindow.setFullScreen(false);
+  mainWindow.setFullScreen(true);
 
   // In production, set the initial browser path to the local bundle generated
   // by the Create React App build process.
   // In development, set it to localhost to allow live/hot-reloading.
   const appURL = app.isPackaged
-    ? url.format({
+    ? url.format({ 
         pathname: path.join(__dirname, 'index.html'),
         protocol: 'file:',
         slashes: true,
@@ -35,7 +40,6 @@ function createWindow() {
     //mainWindow.webContents.openDevTools({ mode: 'detach' });
   }
 }
-
 // Setup a local proxy to adjust the paths of requested files when loading
 // them from the local production bundle (e.g.: local fonts, etc...).
 function setupLocalFilesNormalizerProxy() {
@@ -55,9 +59,11 @@ function setupLocalFilesNormalizerProxy() {
 // is ready to create the browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+  
   createWindow();
+  setupDatabase();
+  
   setupLocalFilesNormalizerProxy();
-
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.

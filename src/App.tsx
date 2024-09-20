@@ -14,7 +14,6 @@ import { AddItems, UpdateItems } from './features/items-management';
 import MainDashboard from './features/manager-dashboard';
 import { useUserContext } from './context/UserContext';
 import ViewItem from './features/items-management/layout/ViewItem';
-
 function App() {
   const { user } = useUserContext();
   const isAdmin = user?.role === 'OWNER'; // Assuming 'OWNER' is the role for admin/owner
