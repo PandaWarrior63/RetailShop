@@ -10,11 +10,16 @@ import { Loader } from 'lucide-react';
 import PreLoader from '../../../shared/preloader/PreLoader';
 import useInitData from '../services/InitService';
 import { DatabaseHelpers } from '../../../utils/databaseHelper';
+import {useDispatch} from 'react-redux';
+
+import {appSliceActions} from '../../../slices/app';
+
 const LogInCard = () => {
   const [username, setUsername] = useState<string>('shah@lectuscorp.com');
   const [password, setPassword] = useState<string>('lectuscorp');
   const { setUser } = useUserContext();
   const [showEula, setShowEula] = useState(false);
+  const dispatch = useDispatch();
   const handleShowEula = () => {
     setShowEula(!showEula);
   };
@@ -29,17 +34,19 @@ const LogInCard = () => {
     if (user) {
       setUser(user);
       const response = await getInitData();
-      // if (user.role === 'OWNER') {
-      //   navigate('/manager-dashboard');
-      // } else {
-      //   navigate('/cashier-dashboard');
-      //   //navigate('/select-pos');
-      // }
-      //await window.ipcRenderer.invoke("create-test");
-      if (response)
-        await DatabaseHelpers.ipcRenderer().invoke("save-init-data",response);
       
-      //window.api.createTest();
+      if (response){
+        await DatabaseHelpers.ipcRenderer().invoke("save-init-data",response);
+        dispatch(appSliceActions.setOpenEntries(response.open_entries));
+      }
+      
+      if (user.role === 'OWNER') {
+        navigate('/manager-dashboard');
+      } else {
+        navigate('/cashier-dashboard');
+        //navigate('/select-pos');
+      }
+      
     }
   };
 

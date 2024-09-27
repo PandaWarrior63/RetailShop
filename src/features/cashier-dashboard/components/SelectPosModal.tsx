@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import {useSelector} from "react-redux";
+import {RootState} from '../../../store'
+
 //import useSellerCompanyService from '../services/SellerComapanyService';
 
 interface SelectPosModalProps {
@@ -8,6 +11,8 @@ interface SelectPosModalProps {
 const SelectPosModal: React.FC<SelectPosModalProps> = ({ onClose }) => {
   // const { setFormData, addCompany, formData, adding } =
   //   useSellerCompanyService();
+  const open_entries = useSelector<RootState, any[]>(state => state.app.open_entries)
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement|HTMLSelectElement>) => {
     const { name, value } = e.target;
     // setFormData((prevData) => ({
@@ -15,7 +20,10 @@ const SelectPosModal: React.FC<SelectPosModalProps> = ({ onClose }) => {
     //   [name]: value,
     // }));
   };
+  useEffect(()=>{
+    console.log("I'm in useEffect")
 
+  },[])
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 //    addCompany();
@@ -57,7 +65,10 @@ const SelectPosModal: React.FC<SelectPosModalProps> = ({ onClose }) => {
               className='input-box'
               required
             >
-            <option value='1'>POS-2024-0004</option>
+            {open_entries.map((el)=>(
+              <option value={el.name}>{el.name}</option>
+            ))}
+            
             <option value=''>New Entry</option>
             </select>
           </div>

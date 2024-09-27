@@ -50,7 +50,6 @@ const useItemService = () => {
       if (data.length === 0) return [];
       const mappedItems = data.map((item: any) => mapIItemsToIMedicine(item)).map((item: IMedicine) =>{
         const defaultPrice = prices.find((priceItem: any) => priceItem.item_code === item.name);
-        console.log("default rpice=",defaultPrice);
         let price = defaultPrice?.price_list_rate || 0
         return {
             ...item,price:price

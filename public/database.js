@@ -59,6 +59,22 @@ function setupDatabase(){
             }
         });
     });
+    ipcMain.handle('get-warehouses', async () => {
+        return new Promise((resolve, reject) => {
+            try{
+                db.all("SELECT * FROM warehouse where parent_warehouse!=''", [], (err, rows) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(rows);
+                    }
+                });
+            }catch(e)
+            {
+                reject(e);
+            }
+        });
+    });
     ipcMain.handle('save-init-data', async (event,data) => {
         return new Promise((resolve, reject) => {
             try{
